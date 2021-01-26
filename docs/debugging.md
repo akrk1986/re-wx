@@ -29,7 +29,7 @@ This'll launch the the Inspection Tool, which looks like this:
 
 ## Using `name` to identify Elements in the debugger
 
-All builtin re-wx componets take a prop called `name`. When supplied, it will tag the wx components with that name in the debugger. This makes it much easier to find specific blocks is a large application. 
+All builtin re-wx componets take a prop called `name`. When supplied, it will tag the wx components with that name in the debugger. This makes it much easier to find specific blocks in a large application. 
 
 ```python
 def render():

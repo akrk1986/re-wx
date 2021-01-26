@@ -107,7 +107,10 @@ At the heart of all re-wx applications is the humble `Element`. We used the func
 
 Here we've created two elements. A top-level `Frame` type, which is required by WXPython, and then an inner `StaticText` one, which displays text on the screen. 
 
-Elements all consist of three pieces of data: 1. the `type` of the entity we want to render into the UI, 3. the properties ("props" from here on out) we want that entity to have, and 3. any children, which are themselves Elements. 
+Elements all consist of three pieces of data: 
+1. the `type` of the entity we want to render into the UI, 
+2. the properties ("props" from here on out) we want that entity to have, and 
+3. any children, which are themselves Elements. 
 
 An important note is that Elements are _plain data_ -- literally just a Python dict like this: 
 
@@ -192,9 +195,9 @@ if __name__ == '__main__':
     app.MainLoop()        
 ```
 
-Here we've setup a Component which keeps track of the current time and displays it nice and bold in the center of our frame. 
+Here we've set up a Component which keeps track of the current time and displays it nice and bold in the center of our frame. 
 
-There's lot going on here, so we'll take if from the top! 
+There's lot going on here, so we'll take it from the top! 
 
 You define your own components by inheriting from `rewx.Component`. This gives you access to all the lifecycle and state management options provided by the base class. You can checkout the [Main Concepts](https://github.com/chriskiehl/re-wx/blob/main/docs/main-concepts.md) for the full details of the life cycle methods.
 
@@ -205,7 +208,7 @@ Components have a few notable methods:
 | `__init__` | This gets called when re-wx instantiates your class. This is where you specify your initial state. Note that this is called _before_ the actual GUI elements are available. This method should be used only to initialize data, not deal with presentational concerns |
 | `render` | This is where you'll create your element tree which defines your UI. | 
 | `component_did_mount` | This method is called once all of your Component's elements have been rendered and mounted onto a wx.Window. It's here that you can kick off any work which requires the GUI to be up and running|
-| set_state | This method is used update your components state and kick off a re-render of its visuals.| 
+| `set_state` | This method is used update your components state and kick off a re-render of its visuals.| 
 
 **Still just an element**
 
@@ -279,12 +282,12 @@ Checkout the docs folder for more detailed guides and walk throughs
 ## Philosophy
 
 **It's a library first.**
-re-wx is "just" a library, _not_ a framework. Beacuse it's a library, you can use as much or as little of as you need. It requires no application-level total buy in like a framwork would. You don't have to do everything the "re-wx way. Further, the output from a re-wx `render` is a plain old WXPython component. Meaning, all re-wx components _ARE_ WX components, and thus require no special handling to integrate with your existing code base. 
+re-wx is "just" a library, _not_ a framework. Beacuse it's a library, you can use as much or as little of as you need. It requires no application-level total buy-in like a framwork would. You don't have to do everything the "re-wx" way. Further, the output from a re-wx `render` is a plain old WXPython component. Meaning, all re-wx components _ARE_ WX components, and thus require no special handling to integrate with your existing code base. 
 
 **It's intended to be symbiotic with WXPython** 
-re-wx is not trying to be an general purpose abstraction over multiple backend UI kits. It's lofty goals begin and end with it being a way of making writing native, cross-platform UIs in WXPython easier. As such, it doesn't need reconcilers, or generic transactions, or any other abstraction related bloat. As a result, re-wx's core codebase is just a handful of files and can be understood in an afternoon.  
+re-wx is not trying to be an general purpose abstraction over multiple backend UI kits. Its lofty goals begin and end with it being a way of making writing native, cross-platform UIs in WXPython easier. As such, it doesn't need reconcilers, or generic transactions, or any other abstraction-related bloat. As a result, re-wx's core codebase is just a handful of files and can be understood in an afternoon.  
 
-Given the symbiotic nature, practicality is favored over purity of abstraction. You'll mix and match WXPython code and re-wx code as needed. A good example of this is for transient dialogs (confirming actions, getting user selectsions, etc..). In React land, you'd traditionally have a modal in your core markup, and then conditionally toggle its visibility via state. However, in re-wx, you'll just use the dialog directly rather than embedding it in the markup and handling its lifecycle via `is_open` style state flags. This is practical to do because, unlike React in Javascript, WX handles managing the UI thread thus allowing us to block in place without any negative effects. Which enables writing straight forward in-line Dialog code.  
+Given the symbiotic nature, practicality is favored over purity of abstraction. You'll mix and match WXPython code and re-wx code as needed. A good example of this is for transient dialogs (confirming actions, getting user selectsions, etc.). In React land, you'd traditionally have a modal in your core markup, and then conditionally toggle its visibility via state. However, in re-wx, you'll just use the dialog directly rather than embedding it in the markup and handling its lifecycle via `is_open`-style state flags. This is practical to do because, unlike React in Javascript, WX handles managing the UI thread, thus allowing us to block in place without any negative effects. Which enables writing straightforward in-line Dialog code.  
 
 ```python
 def handle_choose_dir(self, event): 
@@ -301,11 +304,11 @@ The good news is that in practice, this is generally something you'll never noti
 
 **API Surface area:** 
 
-Only the most common attributes are currently managed by declarative props (basically, most of what falls under `wx.Control`). For example, specifics such as `InsertionPoint`s in `TextCtrl`s are considered out of scope for rewx. `Ref`s act as a handy escape-hatch for when you need access to the full WX API. Be sure to checkout the [Componet Docs](TODO) for the full list of supported props. 
+Only the most common attributes are currently managed by declarative props (basically, most of what falls under `wx.Control`). For example, specifics such as `InsertionPoint`s in `TextCtrl`s are considered out of scope for re-wx. `Ref`s act as a handy escape-hatch for when you need access to the full WX API. Be sure to check out the [Componet Docs](TODO) for the full list of supported props. 
 
 **Stubborn Widgets:**
 
-Some WXPython widget, like the prefab RadioGroup, cannot have its number of options changed after creation. So, updating the `choices` prop will have no effect. Luckily, these components are few and far between, and usually have easy work arounds or alternatives. See the [Componet Docs](TODO) for more info.  
+Some WXPython widget, like the prefab RadioGroup, cannot have its number of options changed after creation. So, updating the `choices` prop will have no effect. Luckily, these components are few and far between, and usually have easy workarounds or alternatives. See the [Componet Docs](TODO) for more info.  
 
 
 
